@@ -1,27 +1,38 @@
+/* Задача 1 */
+
 "use strict"
 function solveEquation(a, b, c) {
-  let arr = [];
-  let d;
-
-  d = b**2 - 4*a*c;
-  if (d == 0){
-    arr.push(-b/(2*a));
+  const discriminant = b**2 - 4 * a * c;
+  if (discriminant > 0){
+      return [(- b + Math.sqrt(discriminant)) / (2 * a), (- b - Math.sqrt(discriminant)) / (2 * a)];
+  } else if (discriminant === 0) {
+      return [- b / (2 * a)];
   }
-  else if (d > 0){
-    arr.push((-b + Math.sqrt(d) )/(2*a));
-    arr.push((-b - Math.sqrt(d) )/(2*a));
-  }
-  return arr;
+  return [];
 }
+
+
+/* Задача 2 */
 
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-  let sum = 0;
-  let payment = 0;
+  if (isNaN(percent)) {
+    return false;
+  }
 
-  percent = percent / 100 / 12;
-  sum = amount - contribution;
-  payment = sum * (percent + (percent / (((1 + percent)**countMonths) - 1)));
-  sum = payment * countMonths;
+  if (isNaN(contribution)) {
+    return false;
+  }
 
-  return Number(sum.toFixed(2));
+  if (isNaN(amount)) {
+    return false;
+  }
+
+  let monthlyPercentage = ((percent/100)/12);
+  let loanBody = (amount-contribution);
+  let montlyPayment = (loanBody*(monthlyPercentage+(monthlyPercentage/(((1+monthlyPercentage)**countMonths)-1))));
+  let totalAmount = (montlyPayment*countMonths);
+
+  return +(totalAmount.toFixed(2));
 }
+    
+console.log(calculateTotalMortgage(10, 0, 20000, 24.));
